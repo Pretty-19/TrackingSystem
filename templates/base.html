@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+ <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+<title>{% block title %} My Webpage {% endblock %} </title>
+    {% endblock %}
+</head>
+<body>
+    <div id="header">
+      {%block header %}      
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand">
+            <img src="../static/logo.png" style="width:100%" alt="CoolBrand">
+          </a>
+          <form class="d-flex">
+            <button class="btn btn-success" type="submit">Login</button>
+          </form>
+        </div>
+      </nav>
+      {% endblock %}
+    </div>
+    <div id="content" >{% block content %}{% endblock %}</div>
+
+</body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+</html>
