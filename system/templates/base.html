@@ -12,12 +12,13 @@
       <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
           <a class="navbar-brand">
-            <img src="../static/logo.png" style="width:100%" alt="CoolBrand">
+            <img src="../static/logo2.png" style="width: 100px; height: 50px;" alt="CoolBrand">
           </a>
-          <form class="d-flex">
-            <button class="btn btn-success" type="submit">Login</button>
+          <form class="btn-toolbar d-flex ">
+            <a class="btn btn-light mx-3" type="submit" href="{{ url_for('auth.login') }}">Login</a>
+            <a class="btn btn-success" type="submit" href="{{ url_for('auth.signup') }}">Sign Up</a>
           </form>
-        </div>
+        </div>  
       </nav>
       {% endblock %}
     </div>

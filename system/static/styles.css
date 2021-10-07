@@ -5,9 +5,10 @@ header{
 
 .jumbotron{
     padding: 25px 50px 75px 100px;        /*T R B L*/
-    height: 300px;
+    height: 500px;
     background-image: url('hero-img.png');
     background-repeat: no-repeat;
     background-size: auto;
     background-position: right;
    }
+
