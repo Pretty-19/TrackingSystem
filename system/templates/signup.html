@@ -1,18 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
-{% block head %}
-{{ super() }}{% endblock %}
+{% block head %}{{ super() }}{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-6">
-            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% with messages = get_flashed_messages() %}
             {% if messages %}
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                <span>{{ message }}</span>
-            </div>
-            {% endfor %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+                </div>
             {% endif %}
             {% endwith %}
           <form action="/signup" method="POST">
