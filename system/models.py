@@ -1,25 +1,19 @@
+from .extenstions import db
 from flask_login import UserMixin
-from . import db
 
-
-
-class User(UserMixin, db.Model):
+class User(db.Model,UserMixin):
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
 
-class ProjectData(UserMixin, db.Model):
-    __tablename__ = "projects"
-    id = db.Column(db.Integer, primary_key = True)
+class Project(db.Model,UserMixin):
+    __tablename__ = "project"
+    id = db.Column(db.Integer, primary_key=True)
     prjname = db.Column(db.String(100))
-    details = db.Column(db.String(1000))
-   
+    description = db.Column(db.String(500))
 
-    def __init__(self, id, prjname, details):
-        self.id = id
+    def __init__(self, prjname, description):
         self.prjname = prjname
-        self.details = details
-
-    def __repr__(self) :
-        return "{} is the project name and {} is the details".format(self.prjname,self.details)
+        self.description = description

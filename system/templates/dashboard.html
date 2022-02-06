@@ -21,7 +21,7 @@
   <link href="../static/demo/demo.css" rel="stylesheet" />
 </head>
 
-<form action="{{ url_for('main.dashboard') }}" method="POST">
+<form action="{{ url_for('auth.dashboard') }}" method="POST">
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="blue">
@@ -103,14 +103,14 @@
                         <table class="table table-striped">
                             <tr>
                              <th>Project Name</th>
-                             <th>Details</th>
+                             <th>Description</th>
                              <th>Action</th>
                             </tr>
                             {% for oneproject in projects %}
                             <h3>{{oneproject}}</h3><hr>
                             <tr>
                               <td>{{oneproject.prjname}}</td>
-                              <td>{{oneproject.details}}</td>
+                              <td>{{oneproject.description}}</td>
                               <td>
                                 <a href="/update/{{oneproject.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{oneproject.id}}">Edit</a>
                                 <a href="/delete/{{oneproject.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
@@ -125,9 +125,9 @@
                       <h4 class="modal-title">Update Information</h4>
                   </div>
                   <div class="modal-body">
-                    <form action="{{url_for('main.update')}}" method="POST">
+                    <form action="{{url_for('auth.update')}}" method="POST">
                           <div class="form-group"><label>Name:</label> <input type="hidden" name="id" value="{{oneproject.id}}">&nbsp;<input type="text" class="form-control" name="name" value="{{oneproject.prjname}}"></div>
-                          <div class="form-group"><label>Details:</label> <input type="text" class="form-control" name="details" value="{{oneproject.details}}"></div>
+                          <div class="form-group"><label>Details:</label> <input type="text" class="form-control" name="description" value="{{oneproject.description}}"></div>
                           <div class="form-group"><button class="btn btn-primary" type="submit">Update</button></div>
                       </form>
                   </div>
@@ -147,15 +147,15 @@
                                   <h4 class="modal-title">Add Project</h4>
                               </div>
                               <div class="modal-body">
-                                  <form action="{{url_for('main.insert')}}" method="POST">
-                                      <div class="form-group">
-                                          <label>Project Name:</label>
-                                          <input type="prjname" class="form-control" name="prjname"  />
+                                  <form action="/insert" method="POST">
+                                    <div class="form-group">
+                                      <label for="Inputforname1" class="form-label">Project Name:</label>
+                                      <input name="prjname" type="prjname" class="form-control"  id="Inputforname1">
                                       </div>
-                                      <div class="form-group">
-                                          <label >Details</label>
-                                          <input type="details" class="form-control" name="details"  />
-                                      </div>
+                                     <div class="form-group">
+                                      <label for="details1" class="form-label">Description</label>
+                                      <input name="description" type="description" class="form-control"  id="details1" >
+                                     </div>
                                       <div class="form-group">
                                           <button class="btn btn-success" type="submit">Add Project</button>
                                       </div>
