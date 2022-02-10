@@ -2,10 +2,12 @@ from flask import Flask
 from flask_login import LoginManager
 from .main.routes import auth
 from .extenstions import db
+from flask_bootstrap import Bootstrap
 
 
 def create_app():
     app = Flask(__name__)
+    bootstrap = Bootstrap(app)
     app.config['SECRET_KEY'] = '2313'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

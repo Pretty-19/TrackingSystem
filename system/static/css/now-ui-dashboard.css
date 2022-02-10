@@ -828,7 +828,7 @@ fieldset[disabled] .btn-warning.active {
 }
 
 .btn-danger {
-  background-color: #FF3636;
+  background-color: #4cc1df;
   color: #FFFFFF;
 }
 
@@ -843,7 +843,7 @@ fieldset[disabled] .btn-warning.active {
 .show>.btn-danger.dropdown-toggle,
 .show>.btn-danger.dropdown-toggle:focus,
 .show>.btn-danger.dropdown-toggle:hover {
-  background-color: #ff5555;
+  background-color: #4cc1df;
   color: #FFFFFF;
   box-shadow: none;
   border-color: #ff5555;
@@ -877,19 +877,19 @@ fieldset[disabled] .btn-danger:focus,
 fieldset[disabled] .btn-danger.focus,
 fieldset[disabled] .btn-danger:active,
 fieldset[disabled] .btn-danger.active {
-  background-color: #FF3636;
-  border-color: #FF3636;
+  background-color: #4cc1df;
+  border-color: #4cc1df;
 }
 
 .btn-danger.btn-link {
-  color: #FF3636;
+  color: #4cc1df;
 }
 
 .btn-danger.btn-link:hover,
 .btn-danger.btn-link:focus,
 .btn-danger.btn-link:active {
   background-color: transparent;
-  color: #ff5555;
+  color: #4cc1df;
   text-decoration: none;
   box-shadow: none;
 }
@@ -949,7 +949,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-neutral.btn-danger {
-  color: #FF3636;
+  color: #4cc1df;
 }
 
 .btn-neutral.btn-danger:hover,
@@ -971,7 +971,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-neutral.btn-warning {
-  color: #FFB236;
+  color: #4cc1df;
 }
 
 .btn-neutral.btn-warning:hover,
@@ -1013,13 +1013,13 @@ fieldset[disabled] .btn-neutral.active {
 .show>.btn-neutral.dropdown-toggle:focus,
 .show>.btn-neutral.dropdown-toggle:hover {
   background-color: #FFFFFF;
-  color: #fa7a50 !important;
+  color: #4cc1df !important;
   box-shadow: none;
 }
 
 .btn-neutral:hover,
 .btn-neutral:focus {
-  color: #fa7a50;
+  color: #4cc1df;
 }
 
 .btn-neutral:hover:not(.nav-link),
@@ -1041,8 +1041,8 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-outline-primary {
-  color: #f96332;
-  border-color: #f96332;
+  color: #4cc1df;
+  border-color: #4cc1df;
 }
 
 .btn-outline-primary:hover,
@@ -1057,8 +1057,8 @@ fieldset[disabled] .btn-neutral.active {
 .show>.btn-outline-primary.dropdown-toggle:focus,
 .show>.btn-outline-primary.dropdown-toggle:hover {
   background-color: transparent;
-  color: #fa7a50;
-  border-color: #fa7a50;
+  color: #4cc1df;
+  border-color: #4cc1df;
   box-shadow: none;
 }
 
@@ -1107,8 +1107,8 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-outline-warning {
-  color: #FFB236;
-  border-color: #FFB236;
+  color: #4cc1df;
+  border-color: #4cc1df;
 }
 
 .btn-outline-warning:hover,
@@ -1123,14 +1123,14 @@ fieldset[disabled] .btn-neutral.active {
 .show>.btn-outline-warning.dropdown-toggle:focus,
 .show>.btn-outline-warning.dropdown-toggle:hover {
   background-color: transparent;
-  color: #ffbe55;
-  border-color: #ffbe55;
+  color: #4cc1df;
+  border-color: #4cc1df;
   box-shadow: none;
 }
 
 .btn-outline-danger {
-  color: #FF3636;
-  border-color: #FF3636;
+  color: #33cec6;
+  border-color: #36f2ff;
 }
 
 .btn-outline-danger:hover,
@@ -1339,7 +1339,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .form-control:focus {
-  border: 1px solid #f96332;
+  border: 1px solid #43a7a793;
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: 0 !important;
@@ -1407,8 +1407,8 @@ fieldset[disabled] .btn-link.active {
 .has-danger .input-group-prepend .input-group-text,
 .has-danger.input-group-focus .input-group-prepend .input-group-text,
 .has-danger.input-group-focus .input-group-append .input-group-text {
-  border-color: #ffcfcf;
-  color: #FF3636;
+  border-color: #5dbedb;
+  color: #36c6ffa6;
   background-color: rgba(222, 222, 222, 0.1);
 }
 
@@ -1956,7 +1956,7 @@ p.description {
 .text-primary,
 a.text-primary:focus,
 a.text-primary:hover {
-  color: #f96332 !important;
+  color: #3271f9 !important;
 }
 
 .text-info,
@@ -1974,13 +1974,13 @@ a.text-success:hover {
 .text-warning,
 a.text-warning:focus,
 a.text-warning:hover {
-  color: #FFB236 !important;
+  color: #2d67e6 !important;
 }
 
 .text-danger,
 a.text-danger:focus,
 a.text-danger:hover {
-  color: #FF3636 !important;
+  color: #2d67e6 !important;
 }
 
 .text-gray,
@@ -5989,3 +5989,21 @@ Created using IcoMoon - icomoon.io
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+.purple-border textarea {
+  border-radius: 25px;
+  min-height: 200px;
+  border: 1px solid #9e9e9e4b;
+}
+.purple-border .form-control:focus {
+  border-radius: 25px;
+  min-height: 200px;
+  border: 1px solid #9e9e9e4b;
+  box-shadow: 0 0 0 0.2rem rgba(72, 177, 226, 0.25);
+}
+
+.green-border-focus .form-control:focus {
+  border-radius: 25px;
+  min-height: 200px;
+  border: 1px solid #4a7ec3;
+  box-shadow: 0 0 0 0.2rem rgba(72, 177, 226, 0.25);
+}

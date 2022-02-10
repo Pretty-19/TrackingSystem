@@ -3,6 +3,8 @@ from flask_login import login_user,logout_user,login_required,current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from system.extenstions import db 
 from system.models import User ,Project
+from system.main.forms import ProjectForm
+
 
 auth = Blueprint('auth', __name__)
 
@@ -53,43 +55,63 @@ def signup_post():
 @auth.route('/dashboard',methods = ['GET','POST'])
 @login_required
 def dashboard():
-    project = Project.query.all()
-    return render_template('dashboard.html', name=current_user.name,project = project)
-
-
-@auth.route('/insert', methods = ['POST'])
-def insert():
-        prjname = request.form.get('prjname')
-        description = request.form.get('description')
-        my_data = Project(prjname=prjname, description=description)
+    projects = Project.query.all()
+    return render_template('dashboard.html',projects = projects)
+ 
+@auth.route('/dashboard/add', methods = ['GET','POST'])
+@login_required
+def add_project():
+    form = ProjectForm()
+    if form.validate_on_submit():
+        my_data = Project(prjname=form.prjname.data, description=form.description.data)
         db.session.add(my_data)
         db.session.commit()
-        flash('Employee Added successfully')
+        flash('You have successfully added a new project.')
         return redirect(url_for('auth.dashboard'))
- 
- 
+    return render_template('project.html', action="Add",form=form,title="Add Project")
 
-@auth.route('/update', methods = ['GET', 'POST'])
-def update():
- 
-    if request.method == 'POST':
-        my_data = Project.query.get(request.form.get('id'))
-        my_data.prjname = request.form.get('prjname')
-        my_data.description = request.form.get('description')
+
+@auth.route('/dashboard/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_project(id):
+
+    add_project = False
+
+    project = Project.query.get_or_404(id)
+    form = ProjectForm(obj=project)
+    if form.validate_on_submit():
+        project.prjname = form.prjname.data
+        project.description = form.description.data
         db.session.commit()
-        flash("Employee Updated Successfully")
- 
+        flash('You have successfully edited the department.')
+
         return redirect(url_for('auth.dashboard'))
- 
- 
-@auth.route('/delete/<id>/', methods = ['GET', 'POST'])
-def delete(id):
-    my_data = Project.query.get(id)
-    db.session.delete(my_data)
+
+    form.description.data = project.description
+    form.prjname.data = project.prjname
+    return render_template('project.html', action="Edit",
+                           add_project=add_project, form=form,
+                           project=project, title="Edit Project")
+
+
+@auth.route('/dashboard/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_project(id):
+
+    project = Project.query.get_or_404(id)
+    db.session.delete(project)
     db.session.commit()
-    flash("Employee Deleted Successfully")
+    flash('You have successfully deleted the project.')
     return redirect(url_for('auth.dashboard'))
- 
+
+
+
+@auth.route('/bugtracker', methods=['GET', 'POST'])
+@login_required
+def bugtracker():
+    return render_template('BugTracker.html')
+
+
 
 
 @auth.route('/logout')
