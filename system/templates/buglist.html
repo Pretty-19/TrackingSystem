@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" href="../static/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-   UI Dashboard
+Bug Tracker
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -15,31 +15,29 @@
   <!-- CSS Files -->
   <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
   <link href="../static/css/now-ui-dashboard.css?v=1.5.0" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../static/demo/demo.css" rel="stylesheet" />
 </head>
 
-<form action="{{ url_for('auth.dashboard') }}" method="POST">
-<body class="">
+<body class="user-profile">
   <div class="wrapper ">
     <div class="sidebar" data-color="blue">
       <div class="logo">
         <a href="https://www.smartsheet.com/how-use-smartsheet-it-ticketing-system" class="simple-text logo-normal">
-          SUPERTICKET
-        </a>
+            SUPERTICKET
+          </a>
+        </div>
+        <div class="sidebar-wrapper" id="sidebar-wrapper">
+          <ul class="nav">
+            <li>
+                <a href="{{ url_for('auth.dashboard') }}">
+                  <i class="now-ui-icons business_chart-bar-32"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+          </ul>
+        </div>
       </div>
-      <div class="sidebar-wrapper" id="sidebar-wrapper">
-        <ul class="nav">
-          <li>
-            <a href="{{ url_for('auth.buglist') }}">
-              <i class="now-ui-icons files_paper"></i>
-              <p>Bug List</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="main-panel" id="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
@@ -76,49 +74,43 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <div class="row justify-content-center">
-          <div class="col-sm-9 col-sm-1 ">
-            <div class="card card-chart">
+      <div class="panel-header panel-header-sm">
+      </div>
+        <div class="content">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
               <div class="card-header">
-                {% import "bootstrap/utils.html" as utils %}<h6> Projects
-                <a href="{{ url_for('auth.add_project') }}" class="btn btn-success btn-small float-right">
-                  <i class="fa fa-plus"></i> Add Project
-              </a>
-            </h6>
-            <i>Click on the Project name to Report Issues</i>
+                <h5 class="title">Issue Report</h5>
+                </div>
+              {% import "bootstrap/utils.html" as utils %}
+              <div class="card-body">
                 {% block body %}
                 <div class="content-section">
                     <div class="outer">
                         <div class="middle">
                             <div class="inner">
                                 <br/> {{ utils.flashed_messages() }}
-                                {% if projects %}
-                                <div class="center" style="height:200px ; width:950px; overflow-y:scroll;">
+                                {% if buglist %}
+                                <div class="center">
                                     <table class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <td  width="1%"><b> Name</b></td>
+                                                <td  width="1%"><b>Title</b></td>
                                                 <td width="5%"> <b>Description</b> </td>
-                                                <td width="1%"> <b>Edit</b> </td>
-                                                <td width="1%"> <b>Delete </b></td>
+                                                <td width="1%"> <b>Priority</b> </td>
+                                                <td width="1%"> <b>Type</b> </td>
+                                                <td width="1%"> <b>Status</b> </td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for project in projects %}
+                                            {% for bugs in buglist %}
                                             <tr>
-                                                <td> <a  href="{{ url_for('auth.bugtracker', prjname=project.prjname) }}" >{{ project.prjname }} </a></td>
-                                                <td> {{ project.description }} </td>
-                                                <td>
-                                                    <a href="{{ url_for('auth.edit_project', id=project.id) }}"> 
-                                                        <i class="now-ui-icons design-2_ruler-pencil"></i> Edit
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="{{ url_for('auth.delete_project', id=project.id) }}">
-                                                        <i class="now-ui-icons  files_box"></i> Delete
-                                                    </a>
-                                                </td>
+                                                <td>{{ bugs.title }}</td>
+                                                <td>{{ bugs.Description }} </td>
+                                                <td>{{ bugs.Priority }} </td>
+                                                <td>{{ bugs.Type }} </td>
+                                                <td>{{ bugs.Status}} </td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -127,8 +119,7 @@
                                 <div style="text-align: center">
                                     {% else %}
                                     <div style="text-align: center">
-                                        No Projects have been added.
-                              
+                                        No Bugs Raised
                                     {% endif %}
                                     </div>
                                 </div>
@@ -136,60 +127,11 @@
                         </div>
                     </div>
                     {% endblock %}
-              </div>
-            </div>           
-          </div>
-        </div>
-      </div>
-    
-      <div class="content">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Statistics</h5>
-                <h4 class="card-title">Issues of Type</h4>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <img src="data:image/png;base64, {{ plot_type }}">
-                </div>
-              </div>
+                 </div>
+              </div>           
+            </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Statistics</h5>
-                <h4 class="card-title">Issues of Priority</h4>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <img src="data:image/png;base64, {{ plot_priority }}">
-                </div>
-              </div>
-              <div class="card-footer">
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="card card-chart">
-              <div class="card-header">
-                <h5 class="card-category">Quality Assurance</h5>
-                <h4 class="card-title">Status of Issues</h4>
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="issues_piechart"></canvas>
-                </div>
-              </div>
-              <div class="card-footer">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
       <footer class="footer">
         <div class=" container-fluid ">
           <nav>
@@ -215,17 +157,19 @@
       </footer>
     </div>
   </div>
-  </form>
-  <!--   Core JS Files   -->
-  <script src="../static/js/core/jquery.min.js"></script>
-  <script src="../static/js/core/popper.min.js"></script>
-  <script src="../static/js/core/bootstrap.min.js"></script>
-  <script src="../static/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS -->
-  <script src="../static/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="../static/js/plugins/bootstrap-notify.js"></script>
-  <script src="../static/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../static/demo/demo.js"></script>
+ <!--   Core JS Files   -->
+ <script src="../static/js/core/jquery.min.js"></script>
+ <script src="../static/js/core/popper.min.js"></script>
+ <script src="../static/js/core/bootstrap.min.js"></script>
+ <script src="../static/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+ <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+ 
+ <!-- Chart JS -->
+ <script src="../static/js/plugins/chartjs.min.js"></script>
+ <!--  Notifications Plugin    -->
+ <script src="../static/js/plugins/bootstrap-notify.js"></script>
+ <script src="../static/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+ <script src="../static/demo/demo.js"></script>
+</form>
 </body>
 </html>

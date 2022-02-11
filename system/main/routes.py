@@ -2,11 +2,13 @@ from flask import Blueprint,request,render_template,flash, redirect, url_for
 from flask_login import login_user,logout_user,login_required,current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from system.extenstions import db 
-from system.models import User ,Project
+from system.models import User ,Project ,Bug
 from system.main.forms import ProjectForm
 
 
 auth = Blueprint('auth', __name__)
+
+
 
 @auth.route('/')
 def index():
@@ -52,12 +54,57 @@ def signup_post():
     return redirect(url_for('auth.login'))
 
 
+
+from collections import Counter
+import matplotlib.pyplot as plt
+import pandas
+from io import BytesIO
+import base64
+
 @auth.route('/dashboard',methods = ['GET','POST'])
 @login_required
 def dashboard():
-    projects = Project.query.all()
-    return render_template('dashboard.html',projects = projects)
+    
+    img = BytesIO()
+    typelist = [bug.Type for bug in Bug.query.all()]
+    count = Counter(typelist)
+    df=pandas.DataFrame.from_dict(count,orient='index')
+    
+    gph=df.plot(kind='bar')
+    plt.xticks(rotation=360, horizontalalignment="center")
+    plt.title("Type of Issues Raised")
+    plt.xlabel("Types of Issues")
+    plt.ylabel("Number of Issues")
+    gph.get_figure().savefig(img,format='png')
+    plt.close()
+    img.seek(0)
+    plot_type = base64.b64encode(img.getvalue()).decode('utf8')
+    
+
+    img = BytesIO()
+    prioritylist = [bug.Priority for bug in Bug.query.all()]
+    count = Counter(prioritylist)
+    df=pandas.DataFrame.from_dict(count,orient='index')
+    
+    gph=df.plot(kind='bar')
+    plt.xticks(rotation=360, horizontalalignment="center")
+    plt.title("Priority of Issues Raised")
+    plt.xlabel("Priority of Issues")
+    plt.ylabel("Number of Issues")
+    gph.get_figure().savefig(img,format='png')
+    plt.close()
+    img.seek(0)
+    plot_priority = base64.b64encode(img.getvalue()).decode('utf8')
+
  
+
+
+
+    projects = Project.query.all()
+    return render_template('dashboard.html', projects = projects,plot_type=plot_type,plot_priority=plot_priority)
+ 
+
+
 @auth.route('/dashboard/add', methods = ['GET','POST'])
 @login_required
 def add_project():
@@ -74,9 +121,7 @@ def add_project():
 @auth.route('/dashboard/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_project(id):
-
     add_project = False
-
     project = Project.query.get_or_404(id)
     form = ProjectForm(obj=project)
     if form.validate_on_submit():
@@ -97,7 +142,6 @@ def edit_project(id):
 @auth.route('/dashboard/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_project(id):
-
     project = Project.query.get_or_404(id)
     db.session.delete(project)
     db.session.commit()
@@ -109,7 +153,37 @@ def delete_project(id):
 @auth.route('/bugtracker', methods=['GET', 'POST'])
 @login_required
 def bugtracker():
-    return render_template('BugTracker.html')
+    prjname=request.args.get('prjname')
+    return render_template('BugTracker.html',prjname=prjname)
+
+
+@auth.route('/buglist', methods=['GET', 'POST'])
+@login_required
+def buglist():
+    buglist = Bug.query.all()
+    prjname=request.args.get('prjname')
+    return render_template('buglist.html',buglist=buglist,prjname=prjname)
+
+
+
+@auth.route('/bugtracker/create', methods=['GET', 'POST'])
+@login_required
+def postissue():
+    title = request.form.get('title')
+    issuedetails = request.form.get('issuedetails')
+    issuepriority = request.form.get('issuepriority')
+    issuestatus = request.form.get('issuestatus')
+    issuetype = request.form.get('issuetype')
+    if request.method == "POST":
+            post = Bug(title =title, Description = issuedetails, Status = issuestatus,Type = issuetype,Priority = issuepriority)
+            db.session.add(post)
+            db.session.commit()
+            flash('You post has been created !', 'success')
+            return redirect(url_for('auth.dashboard'))
+    else:
+            flash('Something went wrong .... Please try again.', 'danger')   
+            return redirect(url_for('auth.dashboard'))
+
 
 
 
@@ -119,6 +193,7 @@ def bugtracker():
 def logout():
     logout_user()
     return redirect(url_for('auth.index'))
+
 
 
 

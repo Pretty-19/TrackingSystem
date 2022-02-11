@@ -36,7 +36,7 @@ Bug Tracker
                 </a>
               </li>
             <li>
-              <a href="#">
+              <a href="{{ url_for('auth.buglist') }}"> 
                 <i class="now-ui-icons files_paper"></i>
                 <p>Bug List</p>
               </a>
@@ -56,7 +56,7 @@ Bug Tracker
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">User Profile</a>
+            <a class="navbar-brand" href="#pablo">Dashboard</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -64,23 +64,18 @@ Bug Tracker
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                <ul class="navbar-nav">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="now-ui-icons loader_gear"></i>
-                      <p>
-                        <span class="d-lg-none d-md-block">Some Actions</span>
-                      </p>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                      {% if current_user.is_authenticated %}
-                     <a class="dropdown-item" href="{{ url_for('auth.logout') }}" > Logout</a>
-                     {% endif %}
-                    </div>
-                  </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="now-ui-icons loader_gear"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  {% if current_user.is_authenticated %}
+                 <a class="dropdown-item" href="{{ url_for('auth.logout') }}" > Logout</a>
+                 {% endif %}
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -95,12 +90,11 @@ Bug Tracker
                 <h5 class="title">Issue Report</h5>
               </div>
               <div class="card-body">
-                <form>
+                <form action="{{ url_for('auth.postissue') }}" method="POST" >
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
-                        <label><b>Project Name</b></label>
-                        <input class="form-control" disabled="" placeholder="Company" value="<Project Name Placeholder>">
+                        <label><b>Project Name :</label> {{prjname}}</b>
                       </div>
                     </div>
                   </div>
@@ -108,7 +102,7 @@ Bug Tracker
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" placeholder="Title" value="Bug Title">
+                        <input type="text"  class="form-control" placeholder="Title" value="Bug Title" name="title">
                       </div>
                     </div>
                   </div>
@@ -116,7 +110,7 @@ Bug Tracker
                     <div class="col-md-4 pr-1">
                       <div class="form-group">
                         <label>Priority</label>
-                        <select class="form-control" id="issuepriority" >
+                        <select class="form-control" id="issuepriority" name="issuepriority">
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
@@ -126,7 +120,7 @@ Bug Tracker
                     <div class="col-md-4 px-1">
                       <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control" id="issuetype"  >
+                        <select class="form-control" id="issuetype"   name="issuetype" >
                             <option>Feature Request</option>
                             <option>Bug</option>
                           </select>
@@ -135,7 +129,7 @@ Bug Tracker
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>Status</label>
-                         <select class="form-control" id="issuestatus">
+                         <select class="form-control" id="issuestatus" name="issuestatus">
                             <option>Open</option>
                             <option>In-progress</option>
                             <option>Resolved</option>
@@ -147,7 +141,7 @@ Bug Tracker
                     <div class="col-md-12">
                       <div class="form-group  purple-border">
                         <label>Details</label>
-                        <textarea class="form-control">
+                        <textarea class="form-control" name="issuedetails">
                         </textarea>
                       </div>
                     </div>
